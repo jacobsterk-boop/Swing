@@ -1,0 +1,18 @@
+# Secrets — never commit these
+.env
+
+# TradingAgents run outputs
+results/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
