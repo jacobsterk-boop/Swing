@@ -46,6 +46,22 @@ make run TICKER=AAPL                   # same thing via make
 Each run prints the final decision and saves the full result to
 `results/<TICKER>_<DATE>_<timestamp>.json` (gitignored).
 
+### Batch mode (the whole watchlist)
+
+`universe.txt` holds the swing universe (one ticker per line, `#` comments ok) —
+it mirrors the **Swing** watchlist on the trading account. Analyze all of them
+and get a ranked BUY/HOLD/SELL summary:
+
+```bash
+python run.py --universe universe.txt   # run the whole list
+make universe                           # same thing
+```
+
+Batch mode is resilient — a single failing ticker is logged and skipped, not
+fatal — and writes a combined `results/_batch_<DATE>_<timestamp>.json` plus the
+per-ticker files. Heads-up: 43 names × a full agent debate is a lot of tokens;
+start with a couple of names or a cheap `--quick` model before running the lot.
+
 ### Cost control
 - Analysts run on a cheap/fast model (`--quick`, default Haiku); the debate runs
   on a stronger model (`--deep`, default Opus).

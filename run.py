@@ -78,7 +78,13 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Run a TradingAgents multi-agent analysis on one ticker.",
     )
-    p.add_argument("ticker", help="Ticker symbol, e.g. NVDA")
+    p.add_argument("ticker", nargs="?", help="Ticker symbol, e.g. NVDA")
+    p.add_argument(
+        "--universe",
+        metavar="FILE",
+        help="Analyze every ticker in FILE (one per line; # comments ok), "
+        "e.g. --universe universe.txt. Overrides a positional ticker.",
+    )
     p.add_argument(
         "--date",
         default=dt.date.today().isoformat(),
@@ -113,30 +119,44 @@ def build_config(args: argparse.Namespace):
     return config
 
 
-def run(args: argparse.Namespace, config) -> None:
-    from tradingagents.graph.trading_graph import TradingAgentsGraph
+def read_universe(path: str) -> list[str]:
+    p = Path(path)
+    if not p.exists():
+        sys.exit(f"Universe file not found: {path}")
+    tickers = []
+    for raw in p.read_text().splitlines():
+        line = raw.split("#", 1)[0].strip()
+        if line:
+            tickers.append(line.upper())
+    if not tickers:
+        sys.exit(f"No tickers found in {path}")
+    return tickers
 
-    ticker = args.ticker.upper()
-    print(f"\n=== TradingAgents: {ticker} @ {args.date} "
-          f"({args.provider}/{args.deep}) ===\n")
 
-    ta = TradingAgentsGraph(debug=args.debug, config=config)
-    result = ta.propagate(ticker, args.date)
+def extract_signal(decision: object) -> str:
+    """Best-effort BUY/SELL/HOLD extraction for ranking. Scans from the end,
+    since the final call usually lands last."""
+    text = str(decision).upper()
+    hits = [t for t in ("BUY", "SELL", "HOLD") if t in text]
+    if not hits:
+        return "?"
+    # pick whichever appears last in the text
+    return max(hits, key=lambda t: text.rfind(t))
 
+
+def analyze_one(ta, ticker: str, date: str) -> tuple[str, object]:
+    result = ta.propagate(ticker, date)
     # propagate() returns either (final_state, decision) or just a decision,
     # depending on version — handle both.
     if isinstance(result, tuple) and len(result) == 2:
         final_state, decision = result
     else:
         final_state, decision = None, result
+    return decision, final_state
 
-    print("\n" + "=" * 60)
-    print(f"DECISION for {ticker} ({args.date}):\n")
-    print(decision)
-    print("=" * 60 + "\n")
 
+def save_result(args, ticker: str, decision, final_state, stamp: str) -> Path:
     RESULTS_DIR.mkdir(exist_ok=True)
-    stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
     out = RESULTS_DIR / f"{ticker}_{args.date}_{stamp}.json"
     payload = {
         "ticker": ticker,
@@ -145,6 +165,7 @@ def run(args: argparse.Namespace, config) -> None:
         "deep_model": args.deep,
         "quick_model": args.quick,
         "rounds": args.rounds,
+        "signal": extract_signal(decision),
         "decision": str(decision),
     }
     if final_state is not None:
@@ -154,12 +175,73 @@ def run(args: argparse.Namespace, config) -> None:
         except Exception:
             payload["final_state"] = str(final_state)
     out.write_text(json.dumps(payload, indent=2))
-    print(f"Saved full result -> {out.relative_to(ROOT)}")
+    return out
+
+
+def run(args: argparse.Namespace, config) -> None:
+    from tradingagents.graph.trading_graph import TradingAgentsGraph
+
+    if args.universe:
+        tickers = read_universe(args.universe)
+    else:
+        tickers = [args.ticker.upper()]
+
+    ta = TradingAgentsGraph(debug=args.debug, config=config)
+    stamp = dt.datetime.now().strftime("%Y%m%d-%H%M%S")
+    summary: list[dict] = []
+
+    for i, ticker in enumerate(tickers, 1):
+        print(f"\n=== [{i}/{len(tickers)}] TradingAgents: {ticker} @ {args.date} "
+              f"({args.provider}/{args.deep}) ===\n")
+        try:
+            decision, final_state = analyze_one(ta, ticker, args.date)
+        except Exception as e:  # one bad ticker shouldn't kill a batch
+            print(f"!! {ticker} failed: {e}")
+            summary.append({"ticker": ticker, "signal": "ERR", "error": str(e)})
+            continue
+
+        signal = extract_signal(decision)
+        out = save_result(args, ticker, decision, final_state, stamp)
+        summary.append({"ticker": ticker, "signal": signal, "file": out.name})
+
+        if len(tickers) == 1:
+            print("\n" + "=" * 60)
+            print(f"DECISION for {ticker} ({args.date}):\n")
+            print(decision)
+            print("=" * 60)
+        else:
+            print(f"  -> {signal}   (saved {out.name})")
+
+    if len(tickers) > 1:
+        print_batch_summary(args, summary, stamp)
+
+
+def print_batch_summary(args, summary: list[dict], stamp: str) -> None:
+    order = {"BUY": 0, "HOLD": 1, "SELL": 2, "?": 3, "ERR": 4}
+    ranked = sorted(summary, key=lambda r: order.get(r["signal"], 5))
+    print("\n" + "=" * 60)
+    print(f"BATCH SUMMARY — {len(summary)} names @ {args.date}")
+    print("=" * 60)
+    for r in ranked:
+        print(f"  {r['signal']:>4}  {r['ticker']}")
+    counts = {}
+    for r in summary:
+        counts[r["signal"]] = counts.get(r["signal"], 0) + 1
+    print("-" * 60)
+    print("  " + "  ".join(f"{k}:{v}" for k, v in sorted(counts.items())))
+
+    RESULTS_DIR.mkdir(exist_ok=True)
+    combined = RESULTS_DIR / f"_batch_{args.date}_{stamp}.json"
+    combined.write_text(json.dumps(
+        {"date": args.date, "results": ranked}, indent=2))
+    print(f"\nSaved batch summary -> {combined.relative_to(ROOT)}")
 
 
 def main() -> None:
     load_dotenv(ROOT / ".env")
     args = parse_args()  # handles --help before we require any keys
+    if not args.universe and not args.ticker:
+        sys.exit("Provide a ticker (e.g. `run.py NVDA`) or --universe FILE.")
     check_env()
     config = build_config(args)
     run(args, config)
