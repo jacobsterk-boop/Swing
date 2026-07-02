@@ -3,9 +3,14 @@
 _Last updated: 2026-07-02. When a setup fires or invalidates, move it to the
 session log with the outcome._
 
-## RIVN — breakout (PROPOSED, awaiting go/no-go)
-- **Status:** proposed 2026-07-02, **not yet placed** — awaiting user's intraday
-  check (5-min VWAP + holding > $18.30) and "go".
+## RIVN — breakout (PRIMED — enter on confirmation)
+- **Status:** 2026-07-02 — **held off, not placed.** Breakout held above $18.30
+  (bullish) but the 5-min was **below VWAP into the close** (intraday fade). Good
+  daily setup, soft intraday timing → wait for a cleaner entry rather than chase
+  the bell.
+- **ENTRY TRIGGER (next session):** RIVN **reclaims VWAP** (buyers back) while
+  **holding above $18.30** → BUY 4 sh @ ~market, stop $16.80. If it opens/trades
+  **below $18.30**, the breakout failed — stand down.
 - **Setup:** breaking above the early-June high (~$18.3) to a new local high
   (~$18.64) on **2.3× volume**, daily RSI ~65 (healthy). Uptrend of higher lows
   since mid-May; tight base $16.8–17.3 last few days.
