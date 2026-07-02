@@ -29,7 +29,7 @@ from pathlib import Path
 # ---- Defaults (edit to taste) -----------------------------------------------
 DEFAULTS = {
     "provider": "anthropic",
-    "deep_model": "claude-opus-4-8",          # heavy reasoning: the debate
+    "deep_model": "claude-sonnet-5",          # heavy reasoning: the debate (cost-friendly)
     "quick_model": "claude-haiku-4-5-20251001",  # cheap/fast: the analysts
     "rounds": 1,                               # keep low to control cost
 }

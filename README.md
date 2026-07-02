@@ -64,7 +64,8 @@ start with a couple of names or a cheap `--quick` model before running the lot.
 
 ### Cost control
 - Analysts run on a cheap/fast model (`--quick`, default Haiku); the debate runs
-  on a stronger model (`--deep`, default Opus).
+  on a stronger model (`--deep`, default Sonnet — a cost/quality balance). Pass
+  `--deep claude-opus-4-8` if you want maximum analysis quality at higher cost.
 - `--rounds 1` (default) keeps token spend down. Raise it only when you want a
   more thorough debate.
 
