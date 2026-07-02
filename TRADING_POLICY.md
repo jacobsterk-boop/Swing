@@ -12,13 +12,23 @@ the rules — the agent treats it as authoritative.
   agent, **single-leg only** (long calls/puts, covered calls, cash-secured puts).
   Multi-leg spreads are app-only and out of scope for the agent.
 
-## Autonomy (current mode: PROPOSE → APPROVE)
+## Autonomy (current mode: PROPOSE → APPROVE, with one sell exception)
 - The agent scans, shortlists, and **proposes** each trade with a thesis, size,
-  and stop. **No order is placed without the user's explicit approval.**
+  and stop. **No BUY is placed without the user's explicit approval.**
 - Every options order is run through `review_option_order` and shown to the user
   before placing.
 - This mode can be loosened later (auto-within-guardrails) only by the user
   editing this file.
+
+### Autonomy exception — raising cash from existing holdings
+The agent is **pre-authorized to SELL** any of the four current Claude-account
+positions — **NVDA, GOOGL, F, NOK** — without prior approval, but only to
+reallocate into a better opportunity or cut clear downside. Constraints:
+- Never sell just to hold cash, and never churn.
+- This exception covers **sells only**; new buys still require approval.
+- Respect settled-cash / good-faith rules — don't sell a newly bought position
+  before the funding sale settles.
+- Log every autonomous sell with the reason.
 
 ## Position sizing & cash rules
 - **Settled cash only.** Never place a buy that isn't covered by settled cash —
