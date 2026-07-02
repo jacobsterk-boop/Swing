@@ -24,6 +24,7 @@ import datetime as dt
 import json
 import os
 import sys
+import traceback
 from pathlib import Path
 
 # ---- Defaults (edit to taste) -----------------------------------------------
@@ -196,7 +197,8 @@ def run(args: argparse.Namespace, config) -> None:
         try:
             decision, final_state = analyze_one(ta, ticker, args.date)
         except Exception as e:  # one bad ticker shouldn't kill a batch
-            print(f"!! {ticker} failed: {e}")
+            print(f"!! {ticker} failed: {type(e).__name__}: {e}")
+            traceback.print_exc()  # full detail for diagnosis
             summary.append({"ticker": ticker, "signal": "ERR", "error": str(e)})
             continue
 
