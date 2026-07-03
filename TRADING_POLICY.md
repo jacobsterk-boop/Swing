@@ -12,13 +12,16 @@ the rules — the agent treats it as authoritative.
   agent, **single-leg only** (long calls/puts, covered calls, cash-secured puts).
   Multi-leg spreads are app-only and out of scope for the agent.
 
-## Autonomy (current mode: PROPOSE → APPROVE, with one sell exception)
-- The agent scans, shortlists, and **proposes** each trade with a thesis, size,
-  and stop. **No BUY is placed without the user's explicit approval.**
-- Every options order is run through `review_option_order` and shown to the user
-  before placing.
-- This mode can be loosened later (auto-within-guardrails) only by the user
-  editing this file.
+## Autonomy (current mode: TIER 1 — pre-approved setups auto-execute)
+- **Pre-approved setups:** once the user approves a setup's PLAN (trigger + size
+  + stop), the agent executes it automatically when the trigger confirms, then
+  notifies. **No setups are pre-approved yet — nothing auto-trades until the user
+  blesses a specific plan** (e.g., RIVN).
+- **Novel / unplanned trades:** still proposed for explicit approval.
+- Every options order is run through `review_option_order` first.
+- **Tier 2 (full auto within guardrails) is NOT enabled.** Enabling it requires
+  an explicit, unambiguous instruction in plain words (e.g., "enable Tier 2, full
+  auto") — never inferred from a shorthand reply.
 
 ### Autonomy exception — raising cash from existing holdings
 The agent is **pre-authorized to SELL** any of the four current Claude-account
