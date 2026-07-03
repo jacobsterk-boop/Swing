@@ -3,6 +3,11 @@
 _Last updated: 2026-07-02. When a setup fires or invalidates, move it to the
 session log with the outcome._
 
+> **These are watched candidates, not commitments.** Sourcing is whole-market
+> (see runbook Step 3) — every session re-ranks the whole market from scratch,
+> and anything here must re-earn its place against fresh finds. None are
+> pre-armed for Tier-1 auto-execution unless explicitly noted.
+
 ## RIVN — breakout (PRIMED — enter on confirmation)
 - **Status:** 2026-07-02 — **held off, not placed.** Breakout held above $18.30
   (bullish) but the 5-min was **below VWAP into the close** (intraday fade). Good

@@ -22,13 +22,19 @@ For each setup in `watchlist-setups.md`:
 - Evaluate the trigger. If it fires → go to Step 5 (propose/execute). If it
   invalidated → log the invalidation and drop it.
 
-## 3. Screen for new candidates (no input needed)
-- Direct-data screen: `get_equity_quotes` across the watchlist (and any broader
-  list) → rank by % change / relative strength.
-- Optional: if the user pasted a TradingView screener CSV, fold it in for
-  whole-market breadth.
-- Shortlist by: relative strength + **RelVol > 1** (conviction) + RSI < 70
-  (room) + liquid/recognizable names.
+## 3. Screen the WHOLE market for candidates (no input needed)
+**Look everywhere — do not anchor to prior names or the watchlist.** Each
+session restarts the search from scratch; previously-watched setups (incl. any
+in `watchlist-setups.md`) compete on equal footing with fresh finds and get no
+head start.
+- **Primary breadth = the whole market**, via the TradingView whole-market
+  screener output (user-run or exported) and/or `screen.py` over a broad list.
+  This is the "everywhere" source.
+- Also pull `get_equity_quotes` / historicals on the 43-name watchlist — but the
+  watchlist is a **convenience list, not a boundary.**
+- Rank ALL candidates together by: relative strength (green on a red tape) +
+  **RelVol > 1** (conviction) + RSI in a healthy zone (not >70) + liquid names.
+- Surface the best 1–3 regardless of where they came from.
 
 ## 4. Deep-dive finalists (optional, ~$0.50 each)
 Run TradingAgents only on the top 1–3 finalists when a decision is close.
