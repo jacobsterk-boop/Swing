@@ -34,6 +34,26 @@ _Last updated: 2026-07-02_
 - Scanner filter gotcha (if we ever use it): `FILTER_TYPE_CLOSE` needs
   `length: 1`, or it errors with `candleCount=0`.
 
+## Scheduled runs — connector NOT available to background sessions
+- (2026-07-06) The cron triggers fire on time, but the fresh background session
+  they spawn loads only the default coding + web tools — **the Robinhood MCP
+  connector is not attached**, so any trade/quote attempt fails ("can't connect
+  to Robinhood MCP"). The per-tool Allow/Ask/Block toggles in claude.ai
+  Connectors govern the connector *inside interactive chats*, NOT background
+  automations — a separate, deeper layer that isn't wired up.
+- **Chosen model = "ping to run" (reliable).** The three schedules were switched
+  from "trade autonomously" to **push reminders**: at 9:35 / 11:30 / 2:00 ET
+  they send Jacob a phone push to open the app and reply "run the routine",
+  which then executes in a live (connector-enabled) session. Trigger IDs:
+  open `trig_0188ACudCBHyQb1bcwLBGS71`, mid-day `trig_01RzMUH3kxUwoye34K2nSGRk`,
+  afternoon `trig_01AMfGDEnAEkSg3GpPBUjF16` (all fresh-session, push:true, M–F).
+- True unattended trading would need the connector wired into the background
+  environment AND would still be fragile — Robinhood logins expire / need MFA
+  re-auth with no human present. Revisit only if the account grows enough to
+  justify it.
+- Note: `update_trigger` can't change a trigger's prompt — to change what a
+  scheduled run *does*, delete and recreate it.
+
 ## TradingView screener recipe (whole-market relative strength)
 > US common stocks · Price $5–$60 · Avg vol (30D) > 1M · Change% today > +2% ·
 > Price above 50-day SMA · RSI(14) 45–68
