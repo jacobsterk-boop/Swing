@@ -14,6 +14,12 @@ _Living document. Add a dated lesson whenever a trade or observation teaches one
   on below-average volume is weak signal.
 - **Buy strength at good entries, not extended ones.** Prefer a breakout that's
   holding its level, or a pullback to a rising base, over chasing a +8% intraday spike.
+- **In a broad gap-up bounce, the names up the LEAST are the best entries.**
+  2026-07-06: the semis complex snapped back off the 7/2 washout — BE +11.6%,
+  SIMO +11.2%, AMBA +10.1% vs SMH +3.4%. Chasing the +10–12% names puts your
+  stop 11%+ below you (poor R/R); SMH near its base takes a tight stop. Same
+  thesis ("semis recovering"), far better risk-adjusted expression. Prefer the
+  ETF or the least-extended leader, not the biggest green number.
 
 ## Risk
 - **Every position gets a stop** placed below a real structural level (base /
