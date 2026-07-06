@@ -36,6 +36,11 @@ _Living document. Add a dated lesson whenever a trade or observation teaches one
   well the day before it accelerated.
 
 ## Process
+- **Verify regulatory/market-structure claims with a web search — don't answer
+  from memory.** (2026-07-06) The agent warned Jacob about PDT rules that had
+  been abolished a month earlier (effective 2026-06-04). Rules change; training
+  knowledge goes stale. When a decision touches regulation, account mechanics,
+  or anything datable, search first.
 - Whole-market breadth comes from the **TradingView screener** (RH scanner is
   broken). Reserve the ~$0.50 TradingAgents deep-dive for finalists only.
 - Log every proposal and outcome in `sessions/` so we can review what worked.
