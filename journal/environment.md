@@ -19,6 +19,18 @@ _Last updated: 2026-07-02_
   or TradingView instead.**
 - **No native TradingView connection** — the user is the bridge (paste outputs).
 - **Options via MCP:** single-leg Level 2 only. No multi-leg spreads.
+- **NO resting stops on fractional shares.** (2026-07-06) A stop order on any
+  fractional quantity is rejected outright: `gtc` → "Invalid time in force for
+  fractional order"; `gfd` → "Invalid trigger for fractional order." Fractional
+  orders must be `market` + `regular_hours` + `gfd`, which excludes every stop
+  type. **Implication for a small account:** high-priced names (SMH ~$615,
+  TSM ~$455, ANET ~$171) can only be bought fractionally here, so they CANNOT
+  carry a broker-native stop. Their stops are **managed levels** — enforced by
+  the agent at each check-in (and by Jacob) with a market sell if breached.
+  - To get a *real* resting broker stop, size a WHOLE-share position: pick names
+    cheap enough that a whole-share lot fits the ~20% cap (e.g. a ~$20–40 stock,
+    5–15 shares ≈ $200–300). Trade-off: managed-stop torque names vs.
+    hard-stop protection on cheaper names.
 - Scanner filter gotcha (if we ever use it): `FILTER_TYPE_CLOSE` needs
   `length: 1`, or it errors with `candleCount=0`.
 
