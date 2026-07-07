@@ -24,11 +24,15 @@ _Last updated: 2026-07-06_
   7/4 weekend + ~$200 more on 7/6.
 
 ## Current holdings (Claude account)
-- **SMH** 0.487258 sh @ $615.69 (~$300) — **managed stop $580** (fractional =
-  no resting stop possible; enforce at every check-in).
-- **SOFI** 18 sh @ $18.92 (~$341) — **resting GTC stop $17.70** on the books
-  (order `6a4bcc52`). Protects itself unattended.
-- (Legacy NVDA/GOOGL/F/NOK all sold at the open 2026-07-06 per plan.)
+- **SOFI** 18 sh @ $18.92 (~$327) — **resting GTC stop $17.70** on the books
+  (order `6a4bcc52`). Protects itself unattended. Held through 7/7's reversal.
+- (SMH stopped out 2026-07-07 @ ~$578, −6.1%, when the $580 line broke on the
+  bounce reversal. Legacy NVDA/GOOGL/F/NOK sold 2026-07-06.)
+
+## ⚠️ Open flag (2026-07-07)
+Cash fell ~$700 overnight (Mon close $2,199.98 → Tue open $1,468.28) with no
+trades. Suspect a withdrawal or reversed provisional deposit. Awaiting Jacob's
+confirmation; verify true account value before sizing new buys.
 
 ## Autonomy (see TRADING_POLICY.md for full rules)
 - **Current: TIER 2 — ENABLED 2026-07-06** by Jacob's explicit instruction.
