@@ -31,14 +31,15 @@ _Last updated: 2026-07-06_
 - (Legacy NVDA/GOOGL/F/NOK all sold at the open 2026-07-06 per plan.)
 
 ## Autonomy (see TRADING_POLICY.md for full rules)
-- **Current: TIER 1** — pre-approved setups auto-execute; novel buys proposed.
-- **Tier 2 under discussion (2026-07-06):** Jacob proposed it ("Thoughts?") on
-  the grounds that the cash account naturally throttles churn. Agent recommended
-  YES with a written guardrail package (max 2 new positions/session, stop at
-  entry on every buy, playbook no-chase rules binding, options stay
-  propose-first, full after-session report). **Awaiting Jacob's explicit
-  plain-words confirmation ("enable Tier 2") — not enabled yet.**
-- Options always run through `review_option_order` before placing.
+- **Current: TIER 2 — ENABLED 2026-07-06** by Jacob's explicit instruction.
+  Agent may auto-initiate equity buys AND sells within the guardrail package:
+  ≤2 new positions/session, a stop at entry on every buy (resting GTC for
+  whole-share lots, documented managed stop for fractional), ≤20%/position,
+  settled cash only, playbook no-chase rules binding, full after-session report.
+- **Options stay propose-first** — always run through `review_option_order`;
+  never auto-executed under Tier 2.
+- **Kill-switch:** "back to Tier 1", "Tier 0", or "pause trading" reverts
+  instantly; any bad surprise → agent proposes dialing back on its own.
 
 ## Sizing constraints
 - Max equity position: 20% of account (~$440 at current size).

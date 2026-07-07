@@ -53,14 +53,20 @@ Run TradingAgents only on the top 1–3 finalists when a decision is close.
 
 ---
 
-## Autonomy tiers (user picks; default = Tier 0)
-- **Tier 0 — Propose→Approve (current).** Every buy waits for an explicit "go".
-- **Tier 1 — Pre-approved conditional setups (recommended next step).** When the
-  user approves a setup's *plan* (trigger + size + stop), the agent executes it
-  automatically once the trigger confirms and notifies after. New/novel ideas
-  still get proposed. Sells of the 4 legacy holdings already run this way.
-- **Tier 2 — Auto within guardrails.** Agent initiates trades within
-  TRADING_POLICY limits without pre-approval. Highest autonomy, highest trust.
+## Autonomy tiers (user picks)
+- **Tier 0 — Propose→Approve.** Every buy waits for an explicit "go".
+- **Tier 1 — Pre-approved conditional setups.** Approved plans auto-execute on
+  trigger; novel ideas proposed.
+- **Tier 2 — Auto within guardrails (CURRENT, enabled 2026-07-06).** Agent
+  initiates equity buys/sells within the TRADING_POLICY guardrails without
+  pre-approval (≤2 new positions/session, stop at entry, ≤20%/position, settled
+  cash, no-chase binding, full report). Options stay propose-first.
+
+> **Reality check — Tier 2 ≠ unattended trading.** Background/scheduled sessions
+> still cannot reach the Robinhood connector (see environment.md), so auto-
+> execution only happens **inside a live session** — i.e., when Jacob taps a
+> reminder and says "run the routine." What Tier 2 buys us today is *no
+> stop-and-ask on every trade during that live run*, not trading while he's away.
 
 **Broker-native automation (works with NO session running):** for a planned
 entry, place a resting **stop-limit buy** (fills only on a strength trigger) or
