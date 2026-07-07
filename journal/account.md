@@ -29,10 +29,14 @@ _Last updated: 2026-07-06_
 - (SMH stopped out 2026-07-07 @ ~$578, −6.1%, when the $580 line broke on the
   bounce reversal. Legacy NVDA/GOOGL/F/NOK sold 2026-07-06.)
 
-## ⚠️ Open flag (2026-07-07)
-Cash fell ~$700 overnight (Mon close $2,199.98 → Tue open $1,468.28) with no
-trades. Suspect a withdrawal or reversed provisional deposit. Awaiting Jacob's
-confirmation; verify true account value before sizing new buys.
+## Cash movement (2026-07-07) — RESOLVED
+Cash fell ~$700 overnight (Mon close $2,199.98 → Tue open $1,468.28). Jacob
+confirmed: he'd moved that money IN on 7/6 to hit the $2,000 margin threshold,
+then moved it back OUT once we established the agentic account is cash-only (no
+margin available) and PDT is gone — so the extra cash served no purpose.
+Deliberate withdrawal, not an error. **True account value ≈ $1,468; size off the
+live `buying_power` figure as always.** Don't expect deposits to stick around
+solely for a margin threshold that doesn't apply here.
 
 ## Autonomy (see TRADING_POLICY.md for full rules)
 - **Current: TIER 2 — ENABLED 2026-07-06** by Jacob's explicit instruction.
