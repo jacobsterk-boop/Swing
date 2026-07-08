@@ -24,10 +24,11 @@ _Last updated: 2026-07-06_
   7/4 weekend + ~$200 more on 7/6.
 
 ## Current holdings (Claude account)
-- **SOFI** 18 sh @ $18.92 (~$327) — **resting GTC stop $17.70** on the books
-  (order `6a4bcc52`). Protects itself unattended. Held through 7/7's reversal.
-- (SMH stopped out 2026-07-07 @ ~$578, −6.1%, when the $580 line broke on the
-  bounce reversal. Legacy NVDA/GOOGL/F/NOK sold 2026-07-06.)
+- **NONE — all cash (~$1,460) as of 2026-07-08.**
+- Recent exits: SOFI stopped out 2026-07-07 @ $17.70 (−6.4%); SMH stopped out
+  2026-07-07 @ ~$578 (−6.1%); legacy NVDA/GOOGL/F/NOK sold 2026-07-06.
+- Both stops fired as designed on a choppy sawtooth semis tape (bounce Mon,
+  reverse Tue, bounce Wed). Lesson reinforced: don't chase the semis bounce.
 
 ## Cash movement (2026-07-07) — RESOLVED
 Cash fell ~$700 overnight (Mon close $2,199.98 → Tue open $1,468.28). Jacob
