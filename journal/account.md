@@ -23,6 +23,14 @@ _Last updated: 2026-07-06_
   cash ~$1,560 · settled buying power ~$1,159. Jacob deposited ~$500 over the
   7/4 weekend + ~$200 more on 7/6.
 
+## Status: PAUSED (2026-07-10)
+Jacob paused the operation. All three scheduled reminder triggers
+(open/mid-day/afternoon) were **deleted** — no automated pings until he restarts.
+Account sits all-cash; no open positions or resting orders to babysit. To resume,
+recreate the reminder triggers (see environment.md for the recipe) and pick an
+autonomy tier. Current tier remains Tier 2 (per TRADING_POLICY.md) but nothing
+runs until a live "run the routine".
+
 ## Current holdings (Claude account)
 - **NONE — all cash (~$1,460) as of 2026-07-08.**
 - Recent exits: SOFI stopped out 2026-07-07 @ $17.70 (−6.4%); SMH stopped out
